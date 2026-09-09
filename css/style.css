@@ -2898,41 +2898,43 @@ p {
 
 .real-pages-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  margin-top: 40px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 980px;
+  margin: 40px auto 0 auto;
 }
 
 .real-page-card {
-  padding: 20px 16px;
+  padding: 24px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   background: #FFFFFF;
-  border: 1.5px solid var(--border-light);
-  border-radius: var(--radius-lg);
+  border: 1.5px solid #EFEAE1;
+  border-radius: 18px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.03);
   transition: all var(--transition-normal);
   position: relative;
 }
 
 .real-page-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
   border-color: #F89B7E;
-  box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+  box-shadow: 0 14px 32px rgba(226, 132, 19, 0.12);
 }
 
 .real-page-badge {
   font-family: var(--font-heading);
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--color-primary);
   background: var(--color-primary-light);
-  padding: 3px 10px;
+  padding: 4px 12px;
   border-radius: var(--radius-full);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .page-visual-sheet {
@@ -3012,15 +3014,16 @@ p {
 }
 
 .page-card-title {
-  font-size: 0.98rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: var(--text-main);
-  margin-bottom: 4px;
+  margin-top: 4px;
+  margin-bottom: 6px;
 }
 
 .page-card-desc {
-  font-size: 0.8rem;
-  line-height: 1.4;
+  font-size: 0.85rem;
+  line-height: 1.45;
   color: var(--text-secondary);
 }
 
