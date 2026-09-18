@@ -1,0 +1,80 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+# API Route Redirects
+[[redirects]]
+  from = "/api/analytics/event"
+  to = "/.netlify/functions/analytics-event"
+  status = 200
+
+[[redirects]]
+  from = "/api/admin/overview"
+  to = "/.netlify/functions/admin-overview"
+  status = 200
+
+[[redirects]]
+  from = "/api/admin/dashboard"
+  to = "/.netlify/functions/admin-overview"
+  status = 200
+
+[[redirects]]
+  from = "/api/admin/quiz"
+  to = "/.netlify/functions/admin-quiz"
+  status = 200
+
+[[redirects]]
+  from = "/api/admin/answers"
+  to = "/.netlify/functions/admin-answers"
+  status = 200
+
+[[redirects]]
+  from = "/api/admin/landing-page"
+  to = "/.netlify/functions/admin-landing-page"
+  status = 200
+
+[[redirects]]
+  from = "/api/admin/acquisition"
+  to = "/.netlify/functions/admin-acquisition"
+  status = 200
+
+[[redirects]]
+  from = "/api/admin/sessions/:sessionId/timeline"
+  to = "/.netlify/functions/admin-session-timeline?sessionId=:sessionId"
+  status = 200
+
+[[redirects]]
+  from = "/api/admin/sessions"
+  to = "/.netlify/functions/admin-sessions"
+  status = 200
+
+[[redirects]]
+  from = "/api/admin/filters"
+  to = "/.netlify/functions/admin-filters"
+  status = 200
+
+[[redirects]]
+  from = "/api/admin/login"
+  to = "/.netlify/functions/admin-login"
+  status = 200
+
+[[redirects]]
+  from = "/api/admin/logout"
+  to = "/.netlify/functions/admin-logout"
+  status = 200
+
+[[redirects]]
+  from = "/api/admin/me"
+  to = "/.netlify/functions/admin-me"
+  status = 200
+
+# HTML Redirects
+[[redirects]]
+  from = "/login"
+  to = "/admin/login.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/dashboard.html"
+  status = 200

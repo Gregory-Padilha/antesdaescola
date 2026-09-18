@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>Antes da Escola™ | Analytics Comportamental</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌱</text></svg>">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Admin CSS -->
+  <link rel="stylesheet" href="/admin-assets/css/admin.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       SIDEBAR
+       ======================================================================== -->
+  <aside class="admin-sidebar" id="admin-sidebar">
+    <div class="sidebar-header">
+      <div class="brand-badge">
+        <span>✨</span>
+        <span>ANTES DA ESCOLA™</span>
+      </div>
+      <span class="brand-tag">Analytics Comportamental</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-tab="overview" id="nav-overview">
+        <span class="nav-icon">📊</span>
+        <span>VISÃO GERAL</span>
+      </button>
+      <button class="nav-item" data-tab="quiz" id="nav-quiz">
+        <span class="nav-icon">🎯</span>
+        <span>FUNIL DO QUIZ</span>
+      </button>
+      <button class="nav-item" data-tab="answers" id="nav-answers">
+        <span class="nav-icon">📝</span>
+        <span>RESPOSTAS</span>
+      </button>
+      <button class="nav-item" data-tab="landing-page" id="nav-landing-page">
+        <span class="nav-icon">📄</span>
+        <span>LANDING PAGE</span>
+      </button>
+      <button class="nav-item" data-tab="acquisition" id="nav-acquisition">
+        <span class="nav-icon">🚀</span>
+        <span>AQUISIÇÃO</span>
+      </button>
+      <button class="nav-item" data-tab="sessions" id="nav-sessions">
+        <span class="nav-icon">🧭</span>
+        <span>SESSÕES</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div>Antes da Escola™</div>
+      <div>Behavioral Analytics • First-Party</div>
+    </div>
+  </aside>
+
+  <!-- ========================================================================
+       MAIN CONTENT WRAPPER
+       ======================================================================== -->
+  <main class="admin-main">
+    
+    <!-- TOP HEADER -->
+    <header class="admin-header">
+      <div class="header-left">
+        <button class="btn-mobile-toggle" id="btn-mobile-toggle" aria-label="Abrir Menu">
+          ☰
+        </button>
+        <h1 class="page-title" id="page-title">Visão Geral</h1>
+      </div>
+
+      <div class="header-right">
+        <!-- Live Polling & Auto-Refresh Status Indicator -->
+        <div class="live-status-container">
+          <div class="live-badge live-status-online" id="live-badge" title="Status da sincronização em tempo real">
+            <span class="live-dot" id="live-dot"></span>
+            <span class="live-text" id="live-text">AO VIVO</span>
+          </div>
+          <span class="live-time" id="live-time">Atualizado agora</span>
+          <button class="btn-refresh" id="btn-manual-refresh" title="Atualizar dados agora">
+            <span class="refresh-icon" id="refresh-icon">↻</span>
+            <span class="refresh-label" id="refresh-label">Atualizar</span>
+          </button>
+        </div>
+
+        <div class="user-info">
+          <span>👤</span>
+          <span id="user-display">Admin</span>
+        </div>
+        <button class="btn-logout" id="btn-logout" title="Sair da sessão">
+          <span>Sair</span>
+          <span>➔</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- CONTENT BODY -->
+    <div class="admin-content">
+
+      <!-- GLOBAL FILTERS BAR -->
+      <section class="filters-bar">
+        <div class="period-pills">
+          <button class="pill-btn" data-period="hoje">Hoje</button>
+          <button class="pill-btn" data-period="ontem">Ontem</button>
+          <button class="pill-btn" data-period="7d">7 dias</button>
+          <button class="pill-btn active" data-period="30d">30 dias</button>
+          <button class="pill-btn" data-period="custom">Personalizado</button>
+        </div>
+
+        <!-- Custom Date Range Picker -->
+        <div class="custom-date-inputs" id="custom-date-box" style="display: none;">
+          <input type="date" id="filter-start-date" class="date-input" aria-label="Data Inicial">
+          <span>até</span>
+          <input type="date" id="filter-end-date" class="date-input" aria-label="Data Final">
+          <button id="btn-apply-custom-date" class="pill-btn active">Aplicar</button>
+        </div>
+
+        <!-- UTM & Device Filters -->
+        <div class="dropdown-filters">
+          <select id="filter-campaign" class="filter-select" aria-label="Filtrar por Campanha">
+            <option value="">Todas as Campanhas</option>
+          </select>
+          <select id="filter-content" class="filter-select" aria-label="Filtrar por Criativo">
+            <option value="">Todos os Criativos</option>
+          </select>
+          <select id="filter-source" class="filter-select" aria-label="Filtrar por Origem">
+            <option value="">Todas as Origens</option>
+          </select>
+          <select id="filter-device" class="filter-select" aria-label="Filtrar por Dispositivo">
+            <option value="">Todos os Dispositivos</option>
+            <option value="mobile">Mobile</option>
+            <option value="desktop">Desktop</option>
+            <option value="tablet">Tablet</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           1. PAINEL: VISÃO GERAL (BEHAVIORAL OVERVIEW)
+           ==================================================================== -->
+      <section class="dashboard-panel active" id="panel-overview">
+        
+        <!-- Behavioral KPI Cards Grid -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Visitantes Únicos</span>
+              <span class="metric-icon">👥</span>
+            </div>
+            <div class="metric-value" id="kpi-visitors">0</div>
+            <div class="metric-sub">Navegadores únicos</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Sessões</span>
+              <span class="metric-icon">⏱️</span>
+            </div>
+            <div class="metric-value" id="kpi-sessions">0</div>
+            <div class="metric-sub" id="kpi-sessions-sub">Sessões ativas</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Quiz Iniciado</span>
+              <span class="metric-icon">🚀</span>
+            </div>
+            <div class="metric-value" id="kpi-started">0</div>
+            <div class="metric-sub" id="kpi-started-rate">0% dos visitantes</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Quiz Concluído</span>
+              <span class="metric-icon">🎯</span>
+            </div>
+            <div class="metric-value" id="kpi-completed">0</div>
+            <div class="metric-sub" id="kpi-completion-rate">0% concluíram</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Taxa de Conclusão</span>
+              <span class="metric-icon">📈</span>
+            </div>
+            <div class="metric-value" id="kpi-completion-percentage">0%</div>
+            <div class="metric-sub">Início ➔ Fim do Quiz</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Chegaram à LP</span>
+              <span class="metric-icon">📄</span>
+            </div>
+            <div class="metric-value" id="kpi-lp">0</div>
+            <div class="metric-sub" id="kpi-lp-rate">0% após resultado</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">CTA Clicado</span>
+              <span class="metric-icon">🖱️</span>
+            </div>
+            <div class="metric-value" id="kpi-cta-clicks">0</div>
+            <div class="metric-sub" id="kpi-cta-clicks-sub">Cliques nos botões</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">CTR Geral dos CTAs</span>
+              <span class="metric-icon">⚡</span>
+            </div>
+            <div class="metric-value" id="kpi-cta-ctr">0%</div>
+            <div class="metric-sub">Cliques / Visualizações</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Tempo Médio na LP</span>
+              <span class="metric-icon">⏳</span>
+            </div>
+            <div class="metric-value" id="kpi-lp-time">0s</div>
+            <div class="metric-sub">Tempo engajado ativo</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Scroll 75%</span>
+              <span class="metric-icon">📜</span>
+            </div>
+            <div class="metric-value" id="kpi-scroll-75">0</div>
+            <div class="metric-sub" id="kpi-scroll-75-rate">0% dos que viram a LP</div>
+          </div>
+        </div>
+
+        <!-- Card de Destaque: Maior Ponto de Abandono -->
+        <div class="highlight-card" id="drop-highlight-card">
+          <div class="highlight-left">
+            <div class="highlight-icon-box">⚠️</div>
+            <div>
+              <div class="highlight-title">Maior Ponto de Abandono no Funil</div>
+              <div class="highlight-desc" id="drop-highlight-desc">Calculando dados do período...</div>
+            </div>
+          </div>
+          <div class="highlight-stat">
+            <div class="highlight-stat-val" id="drop-highlight-val">—</div>
+            <div class="highlight-stat-sub" id="drop-highlight-sub">queda na etapa</div>
+          </div>
+        </div>
+
+        <!-- Funil Macro de Comportamento -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Funil Comportamental Macro</h2>
+              <p class="panel-subtitle">Jornada do visitante da entrada até o clique em CTA na Landing Page</p>
+            </div>
+          </div>
+          <div class="funnel-list" id="overview-funnel-list">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Gráfico de Desempenho Diário -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Evolução Diária do Tráfego & Engajamento</h2>
+              <p class="panel-subtitle">Visitantes, inícios de quiz, conclusões, visitas à LP e cliques em CTA</p>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="chart-daily-overview"></canvas>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ====================================================================
+           2. PAINEL: FUNIL DO QUIZ (8 ETAPAS DETALHADAS)
+           ==================================================================== -->
+      <section class="dashboard-panel" id="panel-quiz">
+        
+        <!-- Highlights: Drop-off e Tempo por Pergunta -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 20px;">
+          <div class="highlight-card" style="margin-bottom: 0;">
+            <div class="highlight-left">
+              <div class="highlight-icon-box" style="background: var(--color-danger-light); color: var(--color-danger);">🚨</div>
+              <div>
+                <div class="highlight-title">Maior Abandono no Quiz</div>
+                <div class="highlight-desc" id="quiz-biggest-drop-desc">Calculando dados...</div>
+              </div>
+            </div>
+            <div class="highlight-stat">
+              <div class="highlight-stat-val" id="quiz-biggest-drop-val" style="color: var(--color-danger);">—</div>
+              <div class="highlight-stat-sub">drop-off</div>
+            </div>
+          </div>
+
+          <div class="highlight-card" style="margin-bottom: 0;">
+            <div class="highlight-left">
+              <div class="highlight-icon-box" style="background: var(--color-warning-light); color: var(--color-warning);">⏱️</div>
+              <div>
+                <div class="highlight-title">Pergunta com Maior Tempo</div>
+                <div class="highlight-desc" id="quiz-longest-time-desc">Calculando dados...</div>
+              </div>
+            </div>
+            <div class="highlight-stat">
+              <div class="highlight-stat-val" id="quiz-longest-time-val" style="color: var(--color-warning);">—</div>
+              <div class="highlight-stat-sub">tempo médio</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Retenção nas 8 Etapas do Quiz</h2>
+              <p class="panel-subtitle">Análise percentual de sessões que alcançaram cada etapa</p>
+            </div>
+          </div>
+          <div class="chart-container" style="height: 340px;">
+            <canvas id="chart-quiz-retention"></canvas>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Tabela de Drop-Off por Etapa</h2>
+              <p class="panel-subtitle">Sessões únicas, avanço, retenção, abandono e tempo médio por pergunta</p>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table" id="table-quiz-steps">
+              <thead>
+                <tr>
+                  <th>Etapa</th>
+                  <th class="col-numeric">Chegaram</th>
+                  <th class="col-numeric">Avançaram</th>
+                  <th class="col-numeric">Retenção %</th>
+                  <th class="col-numeric">Abandonaram</th>
+                  <th class="col-numeric">Drop-off %</th>
+                  <th class="col-numeric">Tempo Médio</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-quiz-steps">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ====================================================================
+           3. PAINEL: RESPOSTAS DAS 8 PERGUNTAS & RESULTADOS
+           ==================================================================== -->
+      <section class="dashboard-panel" id="panel-answers">
+        
+        <!-- Distribuição dos Resultados Finais -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Distribuição dos Resultados do Quiz</h2>
+              <p class="panel-subtitle">Classificação das crianças, volume e taxa de ida para a Landing Page</p>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Classificação</th>
+                  <th class="col-numeric">Crianças</th>
+                  <th class="col-numeric">% do Total</th>
+                  <th class="col-numeric">Ida à LP</th>
+                  <th class="col-numeric">Taxa Ida LP</th>
+                  <th class="col-numeric">Clicaram CTA</th>
+                  <th class="col-numeric">Taxa CTA</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-results-distribution">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Grade com as 8 Perguntas Reais -->
+        <div class="panel-header" style="margin-top: 10px;">
+          <div>
+            <h2 class="panel-title">Respostas por Pergunta</h2>
+            <p class="panel-subtitle">Distribuição exata das opções escolhidas e taxa de conclusão do quiz por opção</p>
+          </div>
+        </div>
+
+        <div class="questions-grid" id="questions-grid-container">
+          <!-- 8 questions rendered dynamically -->
+        </div>
+
+      </section>
+
+      <!-- ====================================================================
+           4. PAINEL: LANDING PAGE (SEÇÕES, SCROLL & CTAs)
+           ==================================================================== -->
+      <section class="dashboard-panel" id="panel-landing-page">
+        
+        <!-- LP Summary KPIs -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Visitas à LP</span>
+              <span class="metric-icon">📄</span>
+            </div>
+            <div class="metric-value" id="lp-kpi-views">0</div>
+            <div class="metric-sub" id="lp-kpi-views-sub">Sessões que viram a LP</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Tempo Médio na LP</span>
+              <span class="metric-icon">⏱️</span>
+            </div>
+            <div class="metric-value" id="lp-kpi-avg-time">0s</div>
+            <div class="metric-sub">Tempo ativo engajado</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Tempo Mediano na LP</span>
+              <span class="metric-icon">⏳</span>
+            </div>
+            <div class="metric-value" id="lp-kpi-med-time">0s</div>
+            <div class="metric-sub">Ponto médio das sessões</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Sessões Engajadas</span>
+              <span class="metric-icon">🔥</span>
+            </div>
+            <div class="metric-value" id="lp-kpi-engaged">0</div>
+            <div class="metric-sub" id="lp-kpi-engaged-rate">0% da LP (≥10s / 2+ seções)</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Cliques em CTA</span>
+              <span class="metric-icon">🖱️</span>
+            </div>
+            <div class="metric-value" id="lp-kpi-cta-clicks">0</div>
+            <div class="metric-sub">Total de cliques</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-label">CTR dos CTAs</span>
+              <span class="metric-icon">⚡</span>
+            </div>
+            <div class="metric-value" id="lp-kpi-cta-ctr">0%</div>
+            <div class="metric-sub">Cliques / Visualizações</div>
+          </div>
+        </div>
+
+        <!-- Scroll Depth Breakdown -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Profundidade de Scroll da Landing Page</h2>
+              <p class="panel-subtitle">Percentual de visitantes da LP que alcançaram cada marco de rolagem</p>
+            </div>
+          </div>
+          <div class="scroll-depth-grid" id="scroll-depth-container">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Gráfico de Retenção por Seção da LP -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Retenção por Seção da Landing Page</h2>
+              <p class="panel-subtitle">Percentual de sessões que visualizaram (≥50% visível por ≥750ms) cada seção na ordem da página</p>
+            </div>
+          </div>
+          <div class="chart-container" style="height: 360px;">
+            <canvas id="chart-lp-sections-retention"></canvas>
+          </div>
+        </div>
+
+        <!-- Tabela: Desempenho das Seções -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Desempenho das Seções da LP</h2>
+              <p class="panel-subtitle">Alcance, tempo médio engajado ativo, avanço para próxima seção e abandono</p>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table" id="table-lp-sections">
+              <thead>
+                <tr>
+                  <th>Seção</th>
+                  <th class="col-numeric">Pessoas que Viram</th>
+                  <th class="col-numeric">Alcance %</th>
+                  <th class="col-numeric">Tempo Médio</th>
+                  <th class="col-numeric">Avançaram %</th>
+                  <th class="col-numeric">Abandono %</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-lp-sections">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Tabela: Desempenho dos CTAs da LP -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Desempenho dos Botões de Ação (CTAs)</h2>
+              <p class="panel-subtitle">Visualizações reais do botão, cliques e taxa de clique (CTR) por posição</p>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table" id="table-lp-ctas">
+              <thead>
+                <tr>
+                  <th>Botão (CTA)</th>
+                  <th>Seção</th>
+                  <th class="col-numeric">Visualizações</th>
+                  <th class="col-numeric">Cliques</th>
+                  <th class="col-numeric">CTR %</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-lp-ctas">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ====================================================================
+           5. PAINEL: AQUISIÇÃO & ATRIBUIÇÃO UTM (ACQUISITION)
+           ==================================================================== -->
+      <section class="dashboard-panel" id="panel-acquisition">
+        
+        <!-- Tabela de Atribuição por Criativo / Campanha -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Desempenho por Criativo & Origem</h2>
+              <p class="panel-subtitle">Comportamento completo de ponta a ponta por UTM Content / Campanha</p>
+            </div>
+            <div>
+              <select id="acquisition-group-by" class="filter-select">
+                <option value="utm_content">Agrupar por: Criativo (utm_content)</option>
+                <option value="utm_campaign">Agrupar por: Campanha (utm_campaign)</option>
+                <option value="utm_source">Agrupar por: Origem (utm_source)</option>
+                <option value="utm_medium">Agrupar por: Mídia (utm_medium)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Dimensão</th>
+                  <th class="col-numeric">Sessões</th>
+                  <th class="col-numeric">Quiz Início</th>
+                  <th class="col-numeric">Quiz Fim</th>
+                  <th class="col-numeric">Chegaram LP</th>
+                  <th class="col-numeric">Scroll 75%</th>
+                  <th class="col-numeric">CTA Clicks</th>
+                  <th class="col-numeric">CTR CTA %</th>
+                  <th class="col-numeric">Tempo Médio LP</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-acquisition">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Desempenho por Dispositivo -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Desempenho por Tipo de Dispositivo</h2>
+              <p class="panel-subtitle">Engajamento e consumo da página em Mobile vs Desktop vs Tablet</p>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Dispositivo</th>
+                  <th class="col-numeric">Sessões</th>
+                  <th class="col-numeric">Quiz Concluído</th>
+                  <th class="col-numeric">Chegaram LP</th>
+                  <th class="col-numeric">Scroll 75%</th>
+                  <th class="col-numeric">CTA Clicks</th>
+                  <th class="col-numeric">CTR CTA %</th>
+                  <th class="col-numeric">Tempo Médio LP</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-devices">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ====================================================================
+           6. PAINEL: SESSÕES ANÔNIMAS & JORNADA (SESSIONS)
+           ==================================================================== -->
+      <section class="dashboard-panel" id="panel-sessions">
+        
+        <div class="panel-card">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Sessões Individuais Anônimas</h2>
+              <p class="panel-subtitle">Histórico de sessões com origem, criativo, dispositivo e jornada completa</p>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table" id="table-sessions">
+              <thead>
+                <tr>
+                  <th>Sessão ID</th>
+                  <th>Início</th>
+                  <th>Origem / Campanha / Criativo</th>
+                  <th>Dispositivo</th>
+                  <th>Etapa Máxima</th>
+                  <th class="col-numeric">Páginas</th>
+                  <th class="col-numeric">Tempo Ativo</th>
+                  <th class="col-numeric">CTA</th>
+                  <th class="col-numeric">Ação</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-sessions">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ========================================================================
+       MODAL: JORNADA DA SESSÃO (SESSION TIMELINE DRAWER)
+       ======================================================================== -->
+  <div class="modal-backdrop" id="session-timeline-modal" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title" id="timeline-modal-title">Jornada da Sessão</h2>
+          <p class="modal-subtitle" id="timeline-modal-subtitle">Carregando timeline...</p>
+        </div>
+        <button class="btn-modal-close" id="btn-close-timeline-modal" aria-label="Fechar">✕</button>
+      </div>
+      <div class="modal-body" id="timeline-modal-body">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Controller JS -->
+  <script src="/admin-assets/js/admin.js"></script>
+</body>
+</html>
